@@ -1,0 +1,412 @@
+% No Case Against Reality
+
+# Introduction
+
+It is unclear precisely in which way fitness is related to truth-tracking
+abilities. On the one hand, it seems rather obvious that the latter is
+explanatorily relevant for the former: being sensitive to the way the world is
+seems instrumental in negotiating environmental complexity [@GodfreySmith96].
+On the other hand, it has often been argued that their relation is less
+straightforward than this. Evolutionary debunking arguments [starting with
+@Plantinga1993; relevant recent discussions include
+@DeCruzBoudryDeSmedtEtAl2011; @Kahane2011; @Leahy2013-LEACTD;
+@WilkinsGriffithsDawesEtAl2012; see also @Stich1990, chapter 5], for example,
+are premised on the idea that truth is not intrinsically related to fitness:
+some false beliefs might be adaptive [see @McKayDennett2009 for discussion];
+and avoiding misses (false positives) might be in certain contexts more
+important that securing hits [@Godfrey-Smith1991]. This will give rise to
+mechanisms with very noisy truth-tracking, yet perfectly attuned to fitness.
+
+Donald D. Hoffman and colleagues's *Interface Theory of Perception* [also ITP
+henceforth] [@Hoffman2009; @Hoffman2016; @HoffmanSingh2012;
+@HoffmanPrakash2014; @HoffmanSinghPrakash2015; @MarkMarionHoffman2010] is an
+attempt, among other things, to construct a decision-theoretic argument for the
+thesis that evolution will favor fitness over truth, and , in particular, that
+"[v]eridical perception escape extinction only if fitness varies monotonically
+with truth" [@HoffmanSinghPrakash2015, p. 1480]. ITP has recently been enjoying
+a high degree of exposure and interest. It is the focus of the December 2015
+special issue of *Psychonomic Bulletin & Review*, where Hoffman's views were
+discussed by a panel of prominent philosophers and psychologists, and the
+popular press has picked up on Hoffman's "attack on reality" enthusiastically:
+among other places, ITP has been recently festured in *Scientific American*
+("Did Humans Evolve to See Things as They Really Are?", Michael Shermer,
+November 2015)) or *The Atlantic* ("The Case Against Reality", Amanda Gefter,
+April 2016). In this paper I argue that Hoffman's case against reality is
+inconclusive.
+
+In section 2 I reconstruct Hoffman and colleagues's main model, and the
+sceptical arguemnt that depends on it, as presented in [@Hoffman2009] and
+@HoffmanSinghPrakash2015]. This argument relies on agents in the
+decision-theoretic model having only one available action per perceptual state.
+That is, they show a total lack of *response breadth*, in Sterelny's
+[-@Sterelny2003] sense. In fact, as I show in section 3, in a fully analogous
+model in which agents have two relevant responses to perceptions, each one best
+in a different context, a realist perceptual strategy is the one that maximizes
+payoff. In a nutshell, Hoffman's argument only works for extremely simple
+cognitive systems; once perception start decoupling from action, truth-tracking
+perceptual strategies win. Section 4 offers some concluding remarks.
+
+# The Decision-Theoretic Argument
+
+## The Model
+
+Hoffman and colleagues describe a model in which realist and non-realist
+("interface", as Hoffman calls them) perceptual strategies can be pit against
+one another. In the model, the world is a collection of resources, each of
+which can be seen as an ordered pair, $\langle d, p\rangle$. Here, $d$ is the
+value of a certain detectable property: a real between 0 and 1. In what
+follows, I will talk of *detectable values* to refer to values of the
+detectable property, and use $D$ to refer to the set of possible detectable
+values. The second member of the resource pair, $p$, is a payoff; the set $P$
+of possible payoffs will also be the reals between 0 and 1. There is a single
+*utility function* for the world, $u:D\rightarrow P$, that takes detectable
+values to payoffs. Think of a banana as the relevant resource: its detectable
+property might be, perhaps, a color encoding from 0 (awfully green) to 1 (nice
+and yellow), and its payoff be directly linked to its nutritional value in a
+way codifiable also as a real from 0 to 1. For a world in which resources are
+bananas, the utility function will be perhaps monotonically increasing, with
+higher detectable values (i.e., yellower babanas) corresponding to higher
+payoffs (more nutritious bananas).
+
+Perceivers in the model can be in a discrete set of perceptual states. I will
+use $s$ to refer to individual such states, and $S$ to refer to the set of
+possible perceptual states. A *perceptual strategy* is a function,
+$ps:D\rightarrow S$, that takes detectable values to perceptual states.
+
+Hoffman and colleagues suggest that realist perceptual strategies should be
+identified with those that preserve world structure. What this amounts to can
+be seen with an example. Figure 1 shows a realist strategy: the perceiver maps
+each detectable-property value onto one of four perceptual states
+(conventionally coded as colors in the figure, i.e., $S = \{Red, Yellow, Green,
+Blue\}$.) The perceptual strategy in figure 1 preserves structure in the sense
+that there is a *perceptual ranking* among states ($Blue > Green > Yellow > Red$)
+such that if a detectable value $d_1$ is mapped onto a perceptual state $s_1$,
+and another detectable value $d_2$ is mapped onto $s_2$, then $s_1 > s_2$
+entails $d_1 > d_2$. 
+
+![A realist strategy](mathematica/realiststrat.pdf){width=50%}
+
+On the other hand, Figure 2 is not a realist strategy: there is no way to
+define a lineal ordering of perceptual states that preserves structure, as both
+very low and very high detectable values are mapped onto Red. Hoffman and
+colleagues call such non structure-preserving strategies *interface
+strategies*.^[Hoffman and colleagues offer a general taxonomy of perceptual
+strategies in [@HoffmanSinghPrakash2015]. The foregoing explication, though, is
+sufficient for our current purposes.]
+
+![An interface strategy](mathematica/interfacestrat.pdf){width=50%} 
+
+## A Decision Problem
+
+In a world so characterized, we can present perceivers with a decision problem.
+Suppose a perceiver is faced with three resources (each of them, remember, a
+pair of a detectable value and a payoff). Suppose as well that there are four
+available perceptual states: $S = \{Red, Yellow, Green, Blue\}$. The perceiver
+sees the three resources, and chooses one using their own perceptual state as
+the only available cue. In Hoffman and colleagues' models, perceivers always
+observe the following simple action standard: 
+
+Simple: 
+
+:   Choose the resource corresponding to highest perceptual state.according to
+the perceptual ranking. In case of draw, choose randomly.
+
+So, for example, if the three resources are mapped by the perceiver's
+perceptual strategy onto \<*Blue*, *Red*, *Blue*\>, the Simple action standard
+mandates that the perceiver choose randomly among the first and third
+resources. 
+
+Finally, we need an utility function connecting detectable values to payoffs.
+Suppose, to begin with, that the utility function is the identity function:
+$u(d) = d$. That is, a resource with a detectable value of $d$ yuelds a payoff
+of $d$. It turns out that, in this case, the optimal perceptual strategy is
+given by Figure 3. (In the figure, and all other analogous ones in this paper,
+the utility function is superimposed in translucent white, and the expected
+payoff of the perceptual strategy, together with the *Simple* action standard,
+is given in a box in the left half of the chart.)^[A *caveat*: optimal
+strategies, here and throughout the paper, are calculated by numerical
+maximization of the relevant expected payoff equations; it is always positble
+for the numerical solver to get stuck into a local, rather than global,
+maximum, though it is unlikely that this would happen in a way that interferes
+with the results reported in this paper. The code I have used can be downloaded
+from [link redacted].]
+
+![Optimal perceptual strategy when utility is given by the identity
+function.](mathematica/linear_cr.pdf){width=50%}
+
+This optimal perceptual strategy is a realist one: detectable values
+corresponding to a perceptual state $p_1$ are guaranteed to be higher than any
+detectable value corresponding to a perceptual state $p_2$ such that $p_1 >
+p_2$. The four perceptual states have different width, but that's alright: it
+means that it's best to be increasinly sensitive to high-payoff detectable
+values.
+
+Now, the catch: the optimal perceptual strategy is a realist one only because
+the utility function $u$ is monotonically increasing, but there is no reason to
+think that, in general, detectable value and payoff should wax and wane
+together. Consider a slightly more realistic banana example: the detectable
+property goes from green to yellow to black, and the utility function is
+something of a Gaussian, high at some intermediate detectable value, and low at
+the green and black extremes. As @HoffmanSinghPrakash2015 point out, many
+resources have a utility function of this sort. 
+
+![Best realist perceptual strategy for Gaussian
+utilities](mathematica/gaussian_cr.pdf){width=50%}
+
+![Optimal perceptual strategy for Gaussian
+utilities](mathematica/gaussian_if.pdf){width=50%}
+
+Figure 4 shows the best *realist* perceptual strategy when the utility function
+is a Gaussian probability density disttibution, with mean $\mu=0.5$ and
+standard deviation $\sigma=0.15$, normalized so that all payoffs lie between 0
+and 1. This strategy is plainly not very good: as perceptual states are coerced
+to preserve the structure of detectable values, the most highly-ranked
+perceptual state must be used to map the maximum of the utility function, plus
+everything to its right. This means that a perceiver following this strategy
+will foolishly choose a resource with a detectable value of 1 (and payoff of 0)
+over one with a detectable value of, say, 0.3 (and payoff value of 0.41).
+Figure 5 gives the optimal perceptual strategy. It maps a narrow range of
+detectable values around the maximum of the utility function to Blue, and then
+pairs of regions symmetrically placed around the maximum for the rest of
+perceptual states. This is an interface strategy in Hoffman and colleagues'
+sense: seeing, e. g. a Blue resource and a Green resource tells us nothing
+about which of the two underlying detectable values is higher. On the other
+hand, those perceptual states tell us a great deal about the associated
+payoffs, and, in particular, that we should pick Blue. We can now note that, in
+general, non-monotonic utility functions will often be non-realist as well: it
+will often pay to follow the contours of local maxima and minima of payoff when
+mapping detectable values to perceptual states. This is, in a nutshell, the
+result that Hoffman and colleagues allude to when they claim that "[v]eridical
+perception escape extinction only if fitness varies monotonically with truth"
+[@HoffmanSinghPrakash2015, p. 1480].^[While in this paper I focus on the
+expected payoff achieved by the different perceptual strateges, Hoffman and
+colleagues make their argument in terms of an evolutionary game played between
+interface and realist perceivers. In fact, while in general strategies with the
+best expected payoff need not be stable, in the games discussed by Hoffman and
+colleagues the dynamics of the resulting game are only responsive to expected
+payoffs [dominating strategies always evolving to fixation; see
+@MarkMarionHoffman2010,
+p. 512], and the evolutionary game-theoretic spin is, as far as I can see,
+theoretically idle.]
+
+Readers familiar the evolutionary-debunking literature will have been growing
+impatient for some time now: Hoffman and colleagues take themselves to be
+arguing that "perception is about having kids, not seeing truth"
+[@HoffmanSinghPrakash2015, p. 1490]; but, as @WilkinsGriffithsDawesEtAl2012
+convincingly argue, the idea that the evolutionary processes that result in our
+perceptual systems favors fitness (having kids) over truth.rests on a
+confusion. As a matter of conceptual fact, fitness maximization just is what
+evolution is all about. It's really no wonder that mechanisms that have been
+selected for, such as perception, are "about having kids". The question is
+whether the means to this fitness-maximizing end is truth tracking, but then,
+"[o]nce the vacuous suggestion that [putatively truth-tracking mechanisms] are
+‘adaptations for fitness’ has been dismissed it is hard to see what the basic
+evolutionary function of cognition could be other than tracking truth."
+[@WilkinsGriffithsDawesEtAl2012]. 
+
+Wilkins and colleagues's point is correct and important, and it undermines
+Hoffman's skeptical project to some extent. Still, Hoffman's argument can be
+reformulated in a way that takes the means-end relation between truth and
+fitness fully on board, while retaining a substantial skeptical bite:
+perception might be all about truth tracking, yet the contents being tracked
+and assessed for truth be wholly fitness-related. The intuitive picture is one
+in which all that is communicated by perception are propositions of the
+following sort: "this stuff is good for you"; "that stuff is bad for you";
+"this stuff is better than that other stuff". One such self-obsessed perceptual
+system would still increase fitness by tracking truth, but the truths in
+question would result in a very impoverished, self-centered picture of reality.
+
+More to our current point, Hoffman can concede that the perceptual strategy
+represented in Figure 5 maximizes payoff by tracking truth: after all, it is
+letting properties of resources guide the choice of perceptual states and, as a
+result, the latter carry information about the former---this is all "truth"
+talk amounts to in these idealized models. Still, the truths it tracks are most
+plausibly regarded as being about payoff itself: Blue means "highest payoff
+here"; Green means "good payoff, not as good as Blue", etc. If this was the
+situation in general for perceptual systems, the resulting picture would be one
+in which perception is perhaps truth tracking, but also myopic and
+self-centered in the extreme. This would, to some extent, vindicate Hoffman's
+attack on reality---or at least vindicate an attack on the view that perception
+gives us epistemic access to substantial aspects of a perceiver-independent
+reality.^[The foregoing content-based reformulation of Hoffman's argument is
+not Hoffman's but my own.] 
+
+This is not the situation for perception in general. In fact, the results I
+have just reviewed depend crucially on perceivers relying exclusively on what I
+have called the Simple action standard. I will now show that if perceivers are
+afforded a modicum of flexibility of response, realist perceptual strategies
+maximize expected payoff.
+
+# Decoupling an Interface
+
+One of the examples Hoffman uses to motivate his views on perception is the
+male *Julodimorpha bakewelli*, a jewel beetle, who will happily choose a
+certain kind of Australian beer bottle (a "stubby") over a female to (attempt
+to) mate with [@GwynneRentz1983].^[Gwynne and Rentz were awarded the 2011 Ig
+Nobel prize in biology "for discovering that a certain kind of beetle mates
+with a certain kind of Australian beer bottle."] This is so, presumably,
+because "[t]he shiny brown colour of the glass is similar to the shiny
+yellow-brown elytra of J. bakewelli" [@GwynneRentz1983, p. 80].^[@Cohen2015
+points out that Hoffman's description of the jewel beetle case is tendentious,
+and that the correct theory of the content of the beetle's perceptual states
+might conclude that the beetle is, after all, correctly representing the
+presence of a shiny brown surface, as opposed to incorrectly representing the
+presence of a female. The objection I will presently develop accepts, for the
+sake of the argument, Hoffman's preferred take on truthfulness as structure
+preservation.]
+
+One thing that these jewel beetles have in common with the agents in the model
+of the foregoing section is that the relevant perceptual state (a perception as
+of a shiny brown surface for the beetle; one of Blue, Green, Yellow and Red, in
+the mode), is rigidly followed by one concrete action (attempting to mate for
+the beetle; the action determined by the Simple action standard, in the model).
+Kim Sterelny [-@Sterelny2003 p. 34], calls this kind of response to perception
+*narrow-banded*, and distinguishes it from broad-banded response, in which
+agents have a "large menu of potential responses" to perceived features
+[*ibid*]. 
+
+It's clear that human perceivers have broad-banded-response capabilities in
+Sterelny's sense, but response strategies that already move beyond the very
+narrow-banded action standard in Hoffman's model are widespread, and in all
+likelyhood phylogenetically ancient. For example, for many bark beetles, the
+decision to use a certain tree as host for breeding and feeding depends not
+just on the right semiochemical cue, but also on the color of the bark
+[@CampbellBorden2006; @CampbellBorden2009], suggesting that they follow an
+action standard of the following sort: "if the relevant semiochemical is
+present, then use tree as host if dark-barked, otherwise pass". Hawkmoths
+[@GoyretMarkwellRaguso2007; @RagusoWillis2005] seem to follow an analogous
+foraging strategy. Another example of evolution inching towards broad-banded
+response is provided by the context-dependence of the extinction of fear
+responses, whereby "extinction is expressed only in the context in which
+extinction was given" [@MarenQuirk2004, p. 849; @Quirk2002]. This suggests a
+situation in which, after extinction, fearful responses to stimuli happen only
+in those contexts in which the stimuli in question were in fact dangerous.^[See
+@Christensen2010 for compelling discussion of many more cases of broad-band
+responses in phylogenetically ancient, simple organisms.]
+
+The "band" in these responses is not much broader than the one that gave us
+beer loving beetles, but, as we are about to see, it is already enough to make
+realist perceptual strategies payoff-maximizing, in a model otherwise fully
+analogous to the one described by Hoffman.
+
+# A Translucent World
+
+Let's consider, then, a variant of the model in section 2, in which different
+contexts make different actions payoff maximizing. The main departure from the
+previous model is that there will now be two utility functions taking
+detectable values to payoffs, each one operative in a different context. We
+will have a normalized Gaussian with mean $\mu=0.2$ and standard deviation
+$\sigma=0.15$, operative in what we will call the *left context*; and another
+normalized Gaussian with the same standard deviation, but mean $\mu=0.8$, in
+the *right context*. I will also suppose that left and right contexts are
+equiprobable, and that the perceiver knows which context it is in at any given
+time via a different sensory modality. 
+
+![Two context-dependent utility
+functions](mathematica/decoupled_payoffs.pdf){width=75%}
+
+This is an example of what @Sterelny2003 calls informationally translucent
+environments: those in which "ecologically relevant features of [the
+perceivers's] environment ... map in complex, one to many ways onto the cues
+they can detect" (*op. cit*, p. 21). In particular, detectable values map in a
+one-to-two way to payoffs. Think of bark beetles: the detectable property is,
+say, the concentration of a certain semiochemical, acquired through olfaction,
+and information about the context (whether the relevant tree is of dark or
+light bark color) is given by visual perception; buth cues mapping in a
+one-to-many way to the quality of the tree as a host. 
+
+Which is the optimal perceptual strategy in the translucent world? "Interface"
+strategies are too smart for their own good. Trying to track the contours of
+one utility function at the expense of the other is obviously suboptimal:
+figure 7 shows a strategy, one of two symmetric ones, in which perception has
+chosen to focus on the right context. This perceptual system will be quite
+oblivious to whatever happens in the left context.
+
+![Interface strategy following one utility
+function](mathematica/decoup_1max_if.pdf){width=50%}
+
+![Interface strategy following both utility functions at the same
+time](mathematica/decoup_2max_if.pdf){width=50%} 
+
+A perceptual strategy that tries to optimize both contexts at the same time, as
+in figure 8, is not much better. The two blue regions mean that, e.g., if the
+right context is operative and there is a resource whose value falls into the
+left blue range, that resource will be chosen, even if its payoff is almost
+zero.
+
+![The optimal perceptual strategy for the translucent
+world](mathematica/decoup_both_cr.pdf){width=50%} 
+
+The optimal perceptual strategy, in figure 9, takes into account the fact that
+the agent knows which context it is in through a different sensory modality.
+The perceiver, in its turn, should take the information coming from its
+perceptual state, and combines it with information about the operative context
+into the following, minimally broad-band action standard.
+
+Broad-band:
+
+:   When in the left context, choose the resource corresponding to the lowest
+perceptual state according to the perceptual ranking. In case of draw, choose
+randomly. 
+
+    When in the right context, choose the resource corresponding to the highest
+    perceptual state according to the perceptual ranking. In case of draw,
+    choose randomly. 
+
+In a nutshell, perception is not trying to second guess the use to which
+information about detectable values will be put. It is just telling it like it
+is, so that this information can be combined with information about the
+operative context into the broad-band action standard. This is a realist
+strategy, and it yields an expected payoff 50% higher than the best non-realist
+strategy. It should be noted that this result is not an artifact of the actual
+utility functions in figure 6. Figure 10 shows what happens with the expected
+payoffs for the best realist strategy and the best (non-realist) interface
+strategy, when we place the mean, $\mu$, of the normalized Gaussian operative
+in the left context at different places, and the one operative in the right
+context at $1-\mu$. When the means of the two curves are separated more than
+one standard deviation (0.15), give or take, the realist strategy wins. Only
+when the curves mostly overlap (that is, when the world is not in fact
+translucent) does a different, interface strategy become optimal.
+
+
+![Expected payoffs for realists and non-realists, for different arrangements of
+utility functions](mathematica/expectedpayoffs.pdf){width=75%} 
+
+# Conclusions
+
+@HoffmanSinghPrakash2015, p. 1482, ask "what precisely are the conditions in
+which natural selection favors veridical perceptions?" The foregoing discussion
+suggests that their pessimistic answer to this question (only when fitness
+varies monotonically with truth) is incorrect: natural selection favors
+veridical perception, at least in the very idealized context of Hoffman-style
+models, whenever the world is translucent and perceiver responses
+correspondingly broad-banded, even if minimally so.
+
+This result resonates with some prominent themes in contemporary philosophy of
+mind: the first part of @Sterelny2003, which has figured prominently in the
+discussion, is a protracted defense of the idea that an all-important milestone
+in the evolution of human cognition is the appearance of very broad-band
+responses. Be that as it may [see @Christensen2010 for a skeptical opinion] the
+translucent-world model shows that there is a set of well-defined conditions in
+which translucency and response breadth do make a difference to how close
+perceptual states are to what we might want to count as *bona fide*
+representations. Similarly, for Tyler Burge [-@Burge2010; see also @Begby2011]
+perceptual constancies, "capacities to represent environmental attributes, or
+environmental particulars, as the same, despite radically different proximal
+stimulations" (*op. cit*, p. 114) are the hallmark of perceptual
+representation. Hoffman-style models are ill-suited to illuminating the
+phenomenon of perceptual constancy, focused as they are on a perceptible
+continuum, with no well-defined objects that one might aim at reidentifying;
+still, the broad-band action standard provides a minimal example of constancy:
+the perceiver following the optimal strategy in the translucent-world model is
+able to zero in on the optimal payoff, regardless of the many-to-one relation
+that holds between detectable value-context pairs and payoffs. 
+
+The fact that realist strategies come up as payoff-maximizing only when the
+cluster of properties appealed to by Sterelny and Burge (constancy, decoupling,
+robust detection) are present probably deserves further exploration. In any
+event, Hoffman's "case against reality", having overlooked the way translucency
+boosts realist strategies, remains unconvincing.
+
+
+# References {-}
