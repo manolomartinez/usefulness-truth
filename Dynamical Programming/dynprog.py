@@ -245,6 +245,10 @@ class EnvironmentThreeAgents:
         self.dv1 = detectable_values1
         self.dv2 = detectable_values2
         self.samples = samples
+        self.dv_combs = list(it.combinations_with_replacement(
+            it.product(range( self.dv1), range(self.dv2)), self.samples))
+
+
         self.labels1 = labels1
         self.labels2 = labels2
         self.whichone = {1:(detectable_values1, labels1),
@@ -255,9 +259,15 @@ class EnvironmentThreeAgents:
         self.stateindices = list(it.product(self.classinputs1,
                                             self.classinputs2))
         self.actorinputs = list(self.actor_inputs())
+        self.actor_actions = np.array(list(self.possible_actor_actions()))
         self.payoff_vec = np.vectorize(payoff_function)
         self.epsilon = 1e-5
 
+    def random_sample(self, array, size):
+        array_copy = np.copy(array)
+        np.random.shuffle(array_copy)
+        return array_copy[:size]
+        
     def classifier_inputs(self, identity):
         """
         Return an array with each possible state the classifier encounters, given
@@ -300,6 +310,22 @@ class EnvironmentThreeAgents:
         iterable = it.permutations(it.product(range(self.samples), repeat=2))
         return np.array(list(iterable), dtype=(np.int, np.int))
                                                           
+    def relevant_actor_actions(self, stateindex):
+        """
+        Return an array with all actions available to the actor that .
+        """
+        iterable = it.permutations(it.product(range(self.samples), repeat=2))
+        return np.array(list(iterable), dtype=(np.int, np.int))
+                                                          
+
+    def possible_actor_actions_redux(self):
+        """
+        Return an array with all actions available to the actor.
+        """
+        iterable = it.permutations(range(self.samples))
+        iterablexiterable = it.product(iterable, repeat=2)
+        return np.array(list(iterablexiterable), dtype=(np.int, np.int))
+                                                          
 
     def possible_actions(self, stateindex):
         """
@@ -314,7 +340,7 @@ class EnvironmentThreeAgents:
         """
         Return the value of a policy, in a certain state, given a function from states to
         payoffs.
-                """
+        """
         actor, classifier1, classifier2 = policy
         stateindex1, stateindex2 = stateindex
         state1 = self.classinputs1[stateindex1]  
@@ -330,6 +356,39 @@ class EnvironmentThreeAgents:
         return np.mean([self.payoff_function(*sample) for sample in
                         chosen_samples])
 
+    def policy_value_mc(self, stateindex, policy):
+        """
+        Return the value of a policy, in a certain state, given a function from states to
+        payoffs.
+        """
+        actor, classifier1, classifier2 = policy
+        state1, state2 = stateindex
+        # This gives a vector with the dvs of the samples
+        classification1 = np.take(classifier1, state1)
+        classification2 = np.take(classifier2, state2)
+        classification = list(zip(classification1, classification2))
+        label_ranking = np.ravel([np.where(np.all(labels==actor, axis=1)) for labels in
+                                          classification])
+        bests = np.ravel(np.where(label_ranking==np.max(label_ranking))[0])
+        chosen_samples = [(state1[best], state2[best]) for best in bests]
+        return np.mean([self.payoff_function(*sample) for sample in
+                        chosen_samples])
+
+    def policy_value_from_classification(self, stateindex, actor, classification):
+        """
+        Return the value of a policy, in a certain state, given a function from states to
+        payoffs.
+                
+        """
+        stateindex1, stateindex2 = stateindex
+        # This gives a vector with the dvs of the samples
+        label_ranking = np.ravel([np.where(np.all(labels==actor, axis=1)) for labels in
+                                          classification])
+        bests = np.ravel(np.where(label_ranking==np.max(label_ranking))[0])
+        chosen_samples = [(state1[best], state2[best]) for best in bests]
+        return np.mean([self.payoff_function(*sample) for sample in
+                        chosen_samples])
+
     def expected_policy_value(self, policy):
         """
         Return the expected value of a policy for all possible states.
@@ -338,6 +397,14 @@ class EnvironmentThreeAgents:
         return np.mean([func(stateindex) for stateindex in
                         it.product(range(len(self.classinputs1)),
                                    range(len(self.classinputs2)))])
+
+    def expected_policy_value_mc(self, policy):
+        """
+        Return the expected value of a policy for all possible states.
+        """
+        func = lambda stateindex: self.policy_value_mc(stateindex, policy)
+        sample = self.random_sample(self.dv_combs, 10000)
+        return np.mean([func(np.array(stateindex).T) for stateindex in sample])
 
     def delta_pvm(self, oldmatrix, oldpolicy, newpolicy):
         """
@@ -392,10 +459,12 @@ class EnvironmentThreeAgents:
         print("Initial policy value: {}".format(expected))
         last_changed = 0
         changed = True
-        all_states = list(it.product(range(len(self.classinputs1)),
-                                     range(len(self.classinputs2))))
+        all_states = np.array(list(it.product(range(len(self.classinputs1)),
+                                     range(len(self.classinputs2)))))
+        np.random.shuffle(all_states)
         for i, s in zip(it.count(), it.cycle(all_states)):
             print("State: {}".format(s))
+            print("Original policy: {}".format(policy))
             policy, expected, changed = self.improve_one_state(s,
                                                                np.copy(policy),
                                                                expected)
@@ -406,26 +475,44 @@ class EnvironmentThreeAgents:
                     condition = last_changed == all_states[i+1]
                 else:
                     condition = last_changed == all_states[0]
-                if condition:
+                if all(condition):
                     break
         return policy
 
     def improve_one_state(self, stateindex, policy, expected):
         actor, classifier1, classifier2 = policy
-        newpolicies = [self.update_policy((np.copy(actor),
-                                           np.copy(classifier1),
-                                           np.copy(classifier2)), stateindex,
-                                          action) for action in
-                       self.possible_actions(stateindex)]
-        expected_payoffs = [self.expected_policy_value(apolicy) for apolicy in
-                            newpolicies]
+        # First, we consider new possible classifier policies
+        print("Improving Actor...")
+        best_actor_policy, expected, actor_changed = self.improve_actor(
+            stateindex, policy, expected)
+        print("Improving Classifier 1...")
+        best_c1_policy, expected, class1_changed = self.improve_classifier1(
+            stateindex, best_actor_policy, expected)
+        print("Improving Classifier 2...")
+        best_c2_policy, expected, class2_changed = self.improve_classifier2(
+            stateindex, best_c1_policy, expected)
+        return best_c2_policy, expected, any([actor_changed, class1_changed,
+                                             class2_changed])
+
+    def improve_actor(self, stateindex, policy, expected):
+        actor, classifier1, classifier2 = policy
+        actor_sample = self.random_sample(self.actor_actions, 1000)
+        np.random.shuffle(actor_sample)
+        # New possible actor policies
+        actor_policies = [self.update_policy((np.copy(actor), np.copy(
+            classifier1), np.copy( classifier2)), stateindex, action) for
+                          action in zip(actor_sample,
+                                        it.repeat(np.copy(classifier1)),
+                                        it.repeat(np.copy(classifier2)))]
+        expected_payoffs = [self.expected_policy_value_mc(apolicy) for apolicy in
+                            actor_policies]
         max_expected = np.max(expected_payoffs) 
         if max_expected - expected > self.epsilon:
             # print("from {} to {}".format(old_payoff, max_payoff))
             print("Expected policy value changed from {} to {}".format(
                 expected, max_expected))
             bestindex = np.argmax(expected_payoffs)
-            new_policy = newpolicies[bestindex]
+            new_policy = actor_policies[bestindex]
             print("New policy: {}".format(new_policy))
             expected = max_expected
             changed = True
@@ -434,6 +521,64 @@ class EnvironmentThreeAgents:
             print("No change in policy")
             changed = False
         return new_policy, expected, changed
+
+    def improve_classifier1(self, stateindex, policy, expected):
+        actor, classifier1, classifier2 = policy
+        # New possible classifier1 policies
+        classifier1_policies = [self.update_policy((
+            np.copy(actor), np.copy(
+                classifier1), np.copy(
+                    classifier2)), stateindex, action) for action in
+                               zip(it.repeat(np.copy(
+                                   actor)), self.possible_classifier_actions(
+                                       1, stateindex),
+                                          it.repeat(np.copy(classifier2)))]
+        expected_payoffs = [self.expected_policy_value_mc(apolicy) for apolicy in
+                            classifier1_policies]
+        max_expected = np.max(expected_payoffs) 
+        if max_expected - expected > self.epsilon:
+            # print("from {} to {}".format(old_payoff, max_payoff))
+            print("Expected policy value changed from {} to {}".format(
+                expected, max_expected))
+            bestindex = np.argmax(expected_payoffs)
+            new_policy = classifier1_policies[bestindex]
+            expected = max_expected
+            changed = True
+        else:
+            new_policy = policy
+            print("No change in policy")
+            changed = False
+        return new_policy, expected, changed
+
+    def improve_classifier2(self, stateindex, policy, expected):
+        actor, classifier1, classifier2 = policy
+        # New possible classifier2 policies
+        classifier2_policies = [self.update_policy((
+            np.copy(actor), np.copy(
+                classifier1), np.copy(
+                    classifier2)), stateindex, action) for action in
+                               zip(it.repeat(np.copy(
+                                   actor)), it.repeat(np.copy(classifier1)), self.possible_classifier_actions(
+                                       2, stateindex))]
+        expected_payoffs = [self.expected_policy_value_mc(apolicy) for apolicy in
+                            classifier2_policies]
+        max_expected = np.max(expected_payoffs) 
+        if max_expected - expected > self.epsilon:
+            # print("from {} to {}".format(old_payoff, max_payoff))
+            print("Expected policy value changed from {} to {}".format(
+                expected, max_expected))
+            bestindex = np.argmax(expected_payoffs)
+            new_policy = classifier2_policies[bestindex]
+            print("New policy: {}".format(new_policy))
+            expected = max_expected
+            changed = True
+        else:
+            new_policy = policy
+            print("No change in policy")
+            changed = False
+        return new_policy, expected, changed
+
+
 
     def expected_payoffs_multiprocess(self, newpolicies):
         """
